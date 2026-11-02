@@ -1,0 +1,14 @@
+# Instaladores de Java descargados para desarrollo
+/jdk-*.exe
+
+# Archivos generados al compilar Java
+**/build/
+*.class
+
+# Archivos temporales y registros
+*.log
+*.tmp
+*.swp
+
+# Salida generada al ejecutar ModEx
+/ModEx/salida.txt

@@ -1,69 +1,86 @@
 package modex;
 
 /**
- * Red social RS = <AG, Rmax>. Guarda los agentes (opinion, receptividad, influencia)
- * y precalcula, para cada agente:
- *   costo[i]  = ceil(|o_i| * (1 - r_i) * inf_i)   (esfuerzo de moderarlo)
- *   aporte[i] = o_i^2 * inf_i                     (lo que "suma" a la raiz de Ext si NO se modera)
+ * Datos de la red social y operaciones para evaluar una estrategia.
+ *
+ * Una estrategia usa 1 para moderar a un agente y 0 para dejar su opinión igual.
  */
 public final class RedSocial {
-    /** Tolerancia para evitar que errores de punto flotante (ej. 9.000000000000002) alteren el techo. */
-    private static final double TOL = 1e-9;
+    /** Corrige pequeños errores de redondeo antes de calcular el techo del costo. */
+    private static final double TOLERANCIA_TECHO = 1e-9;
 
     public final int n;
-    public final double[] op, rec, inf;
+    public final double[] op;
+    public final double[] rec;
+    public final double[] inf;
     public final int rmax;
     public final int[] costo;
     public final double[] aporte;
 
-    public RedSocial(double[] op, double[] rec, double[] inf, int rmax) {
-        this.n = op.length;
-        this.op = op;
-        this.rec = rec;
-        this.inf = inf;
-        this.rmax = rmax;
-        this.costo = new int[n];
-        this.aporte = new double[n];
-        for (int i = 0; i < n; i++) {
-            costo[i] = costoAgente(op[i], rec[i], inf[i]);
-            aporte[i] = op[i] * op[i] * inf[i];
+    public RedSocial(double[] opiniones, double[] receptividades,
+            double[] influencias, int presupuestoMaximo) {
+        n = opiniones.length;
+        op = opiniones;
+        rec = receptividades;
+        inf = influencias;
+        rmax = presupuestoMaximo;
+
+        costo = new int[n];
+        aporte = new double[n];
+        for (int agente = 0; agente < n; agente++) {
+            costo[agente] = costoAgente(op[agente], rec[agente], inf[agente]);
+            aporte[agente] = op[agente] * op[agente] * inf[agente];
         }
     }
 
-    /** Valor real (antes del techo) del esfuerzo de moderar a un agente. */
-    public static double costoReal(double o, double r, double inf) {
-        return Math.abs(o) * (1.0 - r) * inf;
+    /** Calcula el costo real de moderar una opinión antes de redondearlo hacia arriba. */
+    public static double costoReal(double opinion, double receptividad, double influencia) {
+        return Math.abs(opinion) * (1.0 - receptividad) * influencia;
     }
 
-    public static int costoAgente(double o, double r, double inf) {
-        return (int) Math.ceil(costoReal(o, r, inf) - TOL);
+    /** Calcula el costo entero de moderar un agente, según el techo del enunciado. */
+    public static int costoAgente(double opinion, double receptividad, double influencia) {
+        double costoSinRedondear = costoReal(opinion, receptividad, influencia);
+        return (int) Math.ceil(costoSinRedondear - TOLERANCIA_TECHO);
     }
 
-    /** Esfuerzo(RS, E) = suma de los costos de los agentes moderados. */
-    public long esfuerzo(int[] e) {
-        long s = 0;
-        for (int i = 0; i < n; i++) if (e[i] == 1) s += costo[i];
-        return s;
+    /** Suma los costos de todos los agentes marcados como moderados. */
+    public long esfuerzo(int[] estrategia) {
+        long esfuerzoTotal = 0;
+        for (int agente = 0; agente < n; agente++) {
+            if (estrategia[agente] == 1) {
+                esfuerzoTotal += costo[agente];
+            }
+        }
+        return esfuerzoTotal;
     }
 
-    /** Suma de o_i^2 * inf_i de los agentes que NO se moderan (lo que queda dentro de la raiz). */
-    public double sumaNoModerada(int[] e) {
-        double s = 0;
-        for (int i = 0; i < n; i++) if (e[i] == 0) s += aporte[i];
-        return s;
+    /** Suma el aporte al extremismo de los agentes que no fueron moderados. */
+    public double sumaNoModerada(int[] estrategia) {
+        double sumaAportes = 0;
+        for (int agente = 0; agente < n; agente++) {
+            if (estrategia[agente] == 0) {
+                sumaAportes += aporte[agente];
+            }
+        }
+        return sumaAportes;
     }
 
-    /** Ext(Mod(RS,E)) = raiz( sum (o'_i^2 * inf_i) ) / n  (formula del enunciado; verificada con sus ejemplos). */
-    public double extremismo(int[] e) {
-        if (n == 0) return 0;
-        return Math.sqrt(sumaNoModerada(e)) / n;
+    /** Calcula Ext = raíz de la suma no moderada dividida por la cantidad de agentes. */
+    public double extremismo(int[] estrategia) {
+        if (n == 0) {
+            return 0;
+        }
+        return Math.sqrt(sumaNoModerada(estrategia)) / n;
     }
 
+    /** Calcula el extremismo antes de moderar a ningún agente. */
     public double extremismoOriginal() {
         return extremismo(new int[n]);
     }
 
-    public boolean aplicable(int[] e) {
-        return esfuerzo(e) <= rmax;
+    /** Indica si la estrategia respeta el presupuesto disponible. */
+    public boolean aplicable(int[] estrategia) {
+        return esfuerzo(estrategia) <= rmax;
     }
 }
