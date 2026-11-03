@@ -1,0 +1,52 @@
+Resultados de ModEx
+
+Casos procesados: 39
+Soluciones calculadas: 82
+Ejecuciones omitidas: 35
+
+Archivos:
+- resumen.csv: métricas y estado de cada algoritmo por caso.
+- entradas/: copias de los archivos usados.
+- salidas/: archivos de salida escritos en el formato de ModEx.
+
+Los tiempos dependen del equipo y de la carga del sistema.
+La brecha se calcula frente al menor extremismo obtenido entre los algoritmos ejecutados para ese caso.
+Si se omitieron los algoritmos exactos, esta brecha no representa la diferencia frente al óptimo global.
+Fuerza bruta se omite en informes por lotes con más de 20 agentes. Programación dinámica se omite si supera el límite de celdas.
+
+Ejecuciones omitidas:
+Prueba7 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba8 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba9 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba10 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba11 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba12 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba13 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba14 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba15 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba16 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba17 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba18 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba19 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba20 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba21 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba22 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba23 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba24 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba25 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba26 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba27 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba28 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba29 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba30 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba31 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba31 - Programación dinámica: La tabla requiere 2204680000 celdas y supera el límite de 200000000.
+Prueba32 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba32 - Programación dinámica: La tabla requiere 5350335000 celdas y supera el límite de 200000000.
+Prueba33 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba33 - Programación dinámica: La tabla requiere 8635080000 celdas y supera el límite de 200000000.
+Prueba34 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba34 - Programación dinámica: La tabla requiere 9416775000 celdas y supera el límite de 200000000.
+Prueba35 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.
+Prueba35 - Programación dinámica: La tabla requiere 18299850000 celdas y supera el límite de 200000000.
+aleatorio_n200 - Fuerza bruta: Se omite en informes por lotes con más de 20 agentes para evitar tiempos muy largos.

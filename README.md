@@ -39,6 +39,19 @@ Para ejecutar las pruebas automáticas incluidas:
 java -jar ModEx.jar --pruebas
 ```
 
+## Generar una carpeta de resultados
+
+En la interfaz, pulsa **Generar carpeta de resultados...**, selecciona la carpeta con los casos `.txt` y elige dónde guardar el resultado. La aplicación crea una carpeta `Resultados_ModEx_fecha_hora` con:
+
+- `resumen.csv`: una fila por caso y algoritmo, con estado, extremismo, esfuerzo, presupuesto, tiempo y diferencia porcentual frente a la mejor solución calculada para ese caso.
+- `entradas/`: copias de los archivos usados. Si junto a la batería existe una carpeta `ejemplos`, también se incluyen sus casos.
+- `salidas/`: archivos de salida ModEx para los algoritmos que se ejecutaron.
+- `LEEME.txt`: explicación de los archivos y lista de ejecuciones omitidas.
+
+El informe ejecuta voraz en todos los casos. Para mantener razonable el tiempo total, omite fuerza bruta cuando hay más de 20 agentes; omite programación dinámica cuando la tabla excede el límite de 200 millones de celdas. Estas omisiones y sus motivos aparecen en `resumen.csv` y `LEEME.txt`.
+
+La brecha porcentual se calcula frente al mejor resultado entre los algoritmos que sí se ejecutaron. Si se omitieron los algoritmos exactos, esa cifra no representa la diferencia frente al óptimo global.
+
 ## Cómo funciona
 
 Cada agente tiene una opinión, una receptividad y una influencia. Moderarlo cuesta `ceil(|opinión| × (1 − receptividad) × influencia)`. La estrategia es aplicable si la suma de esos costos no supera `Rmax`.
@@ -65,7 +78,8 @@ El código fuente está en `ModEx/src/modex/`:
 | `Solucion.java` | Representa una estrategia y sus resultados. |
 | `ArchivoIO.java` | Lee entradas y salidas, y escribe archivos de resultado. |
 | `Generador.java` | Crea redes aleatorias reproducibles mediante una semilla. |
-| `ModexGUI.java` | Interfaz Swing para cargar, generar, ejecutar, comparar y verificar casos. |
+| `GeneradorResultados.java` | Procesa carpetas de casos y crea el resumen y las salidas para el informe. |
+| `ModexGUI.java` | Interfaz Swing para cargar, generar, ejecutar, comparar y verificar casos, y crear informes por lotes. |
 | `Pruebas.java` | Prueba los ejemplos del enunciado y compara los algoritmos en casos aleatorios pequeños. |
 
 `ModEx/ejemplos/` contiene entradas de ejemplo y `ModEx/Bateria de pruebas/` contiene los casos de la batería y su tabla de resultados. El PDF del enunciado y las imágenes de criterios están en la raíz del repositorio.

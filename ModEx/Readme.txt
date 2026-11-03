@@ -35,7 +35,16 @@ USO DE LA INTERFAZ
   Verificar costo              Desglosa el calculo del esfuerzo (agente por agente) y del extremismo.
   Guardar salida...            Escribe la salida en el formato del enunciado.
   Cargar salida a verificar... Lee un archivo de salida y recalcula esfuerzo y extremismo para comprobarlos.
+  Generar carpeta de resultados... Procesa una carpeta de pruebas y guarda un resumen CSV, las entradas y las salidas calculadas.
   Nota: fuerza bruta esta limitada a n <= 30 (revisa 2^n subconjuntos).
+
+INFORME DE RESULTADOS
+  Seleccione la carpeta que contiene las pruebas y luego dónde guardar el informe.
+  Se crea una carpeta Resultados_ModEx_fecha_hora con resumen.csv, LEEME.txt,
+  copias de las entradas y los archivos de salida de cada algoritmo ejecutado.
+  Se agregan automaticamente los ejemplos si existe una carpeta ejemplos junto a la bateria.
+  Para terminar en tiempo razonable, el informe omite fuerza bruta con mas de 20 agentes.
+  Programacion dinamica se omite si su tabla supera 200 millones de celdas.
 
 FORMATO DE ENTRADA (n + 2 lineas)
   n

@@ -6,9 +6,6 @@ package modex;
  * Una estrategia usa 1 para moderar a un agente y 0 para dejar su opinión igual.
  */
 public final class RedSocial {
-    /** Corrige pequeños errores de redondeo antes de calcular el techo del costo. */
-    private static final double TOLERANCIA_TECHO = 1e-9;
-
     public final int n;
     public final double[] op;
     public final double[] rec;
@@ -41,7 +38,10 @@ public final class RedSocial {
     /** Calcula el costo entero de moderar un agente, según el techo del enunciado. */
     public static int costoAgente(double opinion, double receptividad, double influencia) {
         double costoSinRedondear = costoReal(opinion, receptividad, influencia);
-        return (int) Math.ceil(costoSinRedondear - TOLERANCIA_TECHO);
+        // Ajusta solo unas pocas ULPs, sin tolerar un margen fijo que pueda
+        // cambiar costos reales que estén hasta 1e-9 por encima de un entero.
+        double toleranciaRepresentacion = 2.0 * Math.ulp(costoSinRedondear);
+        return (int) Math.ceil(costoSinRedondear - toleranciaRepresentacion);
     }
 
     /** Suma los costos de todos los agentes marcados como moderados. */
@@ -58,9 +58,14 @@ public final class RedSocial {
     /** Suma el aporte al extremismo de los agentes que no fueron moderados. */
     public double sumaNoModerada(int[] estrategia) {
         double sumaAportes = 0;
+        double compensacion = 0;
         for (int agente = 0; agente < n; agente++) {
             if (estrategia[agente] == 0) {
-                sumaAportes += aporte[agente];
+                // Suma compensada para reducir la pérdida de precisión en redes grandes.
+                double aporteAjustado = aporte[agente] - compensacion;
+                double nuevaSuma = sumaAportes + aporteAjustado;
+                compensacion = (nuevaSuma - sumaAportes) - aporteAjustado;
+                sumaAportes = nuevaSuma;
             }
         }
         return sumaAportes;

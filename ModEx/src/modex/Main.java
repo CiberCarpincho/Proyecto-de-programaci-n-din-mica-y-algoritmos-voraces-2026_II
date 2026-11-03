@@ -23,10 +23,15 @@ public class Main {
         if (args[0].equals("--pruebas")) {
             System.exit(Pruebas.ejecutar() ? 0 : 1);
         }
+        if (args[0].equals("--benchmark-voraz")) {
+            BenchmarkModex.ejecutar();
+            return;
+        }
         if (args.length < 2) {
             System.out.println("Uso: java -jar ModEx.jar entrada.txt salida.txt [FB|V|PD]\n"
                     + "     java -jar ModEx.jar            (abre la interfaz)\n"
-                    + "     java -jar ModEx.jar --pruebas");
+                    + "     java -jar ModEx.jar --pruebas\n"
+                    + "     java -jar ModEx.jar --benchmark-voraz");
             return;
         }
         RedSocial rs = ArchivoIO.leerEntrada(Paths.get(args[0]));
